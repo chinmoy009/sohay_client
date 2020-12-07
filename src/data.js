@@ -62,6 +62,7 @@ export const data = {
             price: "750 Taka",
             brand: "Plus Point",
             numberOfReviews: 4,
+            rating: 1,
             description: "High quality product",
             image: 'images/d6.jpg'
         }
