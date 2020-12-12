@@ -67,7 +67,7 @@ class ProductScreen extends React.Component {
                             </ul>
                         </div>
                         <div className="col-1">
-                            <div class="card card-body">
+                            <div className="card card-body">
                                 <ul>
                                     <li>
                                         <div className="row">

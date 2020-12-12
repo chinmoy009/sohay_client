@@ -131,6 +131,15 @@ header {
 
 }
 
+.badge {
+  background-color: red;
+  color: #ffffff;
+  border-radius: 50%;
+  padding: 0.2rem 0.7rem;
+  font-size: 1.4rem;
+  margin-left: 0.2rem;
+}
+
 .header-links a {
   color: white;
   padding: 1rem;

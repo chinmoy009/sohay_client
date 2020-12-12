@@ -1,5 +1,6 @@
 import React from 'react';
 import Rating from './Rating';
+import {Link} from 'react-router-dom';
 
 class Product extends React.Component {
     constructor(props) {
@@ -13,11 +14,13 @@ class Product extends React.Component {
             numberOfReviews: product.numberOfReviews
         };
         return <div className="card">
-        <img className="medium" src={product.image} alt="product"/>
+        <Link to={`/product/${product._id}`}>
+            <img className="medium" src={product.image} alt="product"/>
+        </Link>
         <div className="card-body">
-            <a href={`/product/${product._id}`}>
+            <Link to={`/product/${product._id}`}>
                 <h2>{product.name}</h2>
-            </a>
+            </Link>
             <Rating rating={rating}/>
             <div>
                 <h2>{product.brand}</h2>
