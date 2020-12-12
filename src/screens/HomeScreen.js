@@ -7,10 +7,6 @@ import {listProducts} from './../actions/productAcition';
 import {connect} from 'react-redux'
 
 class HomeScreen extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         this.props.listProducts();
     }
