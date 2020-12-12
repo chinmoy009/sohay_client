@@ -11,10 +11,24 @@ import {detailsProduct} from './../actions/productAcition'
 class ProductScreen extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            qty: 1
+        }
     }
 
     componentDidMount() {
         this.props.detailsProduct(this.props.match.params.id);
+    }
+
+    setQty = (e) => {
+        this.setState({
+            ...this.state,
+            qty: e.target.value
+        });
+    }
+
+    addToCart = (e) => {
+        this.props.history.push(`/cart/${this.props.product._id}?qty=${this.state.qty}`);
     }
 
     render() {
@@ -70,9 +84,29 @@ class ProductScreen extends React.Component {
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <button className="primary block">Add to Cart</button>
-                                    </li>
+                                    {
+                                        product.countInStock > 0 && (
+                                            <>
+                                                <li>
+                                                    <div className="row">
+                                                        <div>Quantity</div>
+                                                        <div>
+                                                            <select value={this.state.qty} onChange={e => this.setQty(e)}>
+                                                                {
+                                                                    [...Array(product.countInStock).keys()].map(x => (
+                                                                        <option key = {x + 1} value={x + 1}>{x + 1}</option>
+                                                                    ))
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <button onClick={this.addToCart} className="primary block">Add to Cart</button>
+                                                </li>
+                                            </>
+                                        )
+                                    }
                                 </ul>
                             </div>
                         </div>
