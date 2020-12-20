@@ -1,5 +1,5 @@
 import React from 'react';
-import {addToCart} from '../actions/cartAction';
+import {addToCart, removeFromCart} from '../actions/cartAction';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import MessageBox from './../components/MessageBox';
@@ -23,8 +23,8 @@ class CartScreen extends React.Component {
     }
 
 
-    removeFromCart = (productId) => {
-        //Delete method
+    removeItemFromCart = (e, productId) => {
+        this.props.removeFromCart(productId);
     }
 
     checkOutHandler = () => {
@@ -61,7 +61,7 @@ class CartScreen extends React.Component {
                                         {item.price} Taka
                                     </div>
                                     <div>
-                                        <button onClick = {this.removeFromCart(item.product)}>Delete</button>
+                                        <button onClick = {(e) => this.removeItemFromCart(e, item.product)}>Delete</button>
                                     </div>
                                 </div>
                             </li>
@@ -91,6 +91,7 @@ class CartScreen extends React.Component {
 
 CartScreen.propTypes = {
     addToCart: PropTypes.func.isRequired,
+    removeFromCart: PropTypes.func.isRequired,
     cartItems: PropTypes.array.isRequired
 }
 
@@ -99,7 +100,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    addToCart
+    addToCart,
+    removeFromCart
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (CartScreen);
