@@ -23,7 +23,7 @@ class CartScreen extends React.Component {
     }
 
 
-    removeItemFromCart = (e, productId) => {
+    removeItemFromCart = (productId) => {
         this.props.removeFromCart(productId);
     }
 
@@ -61,7 +61,7 @@ class CartScreen extends React.Component {
                                         {item.price} Taka
                                     </div>
                                     <div>
-                                        <button onClick = {(e) => this.removeItemFromCart(e, item.product)}>Delete</button>
+                                        <button onClick = {() => this.removeItemFromCart(item.product)}>Delete</button>
                                     </div>
                                 </div>
                             </li>

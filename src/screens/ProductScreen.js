@@ -1,6 +1,7 @@
 import React from 'react';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import CartQuantityComponent from '../components/cartQuantityComponent';
 import Rating from '../components/Rating';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -88,18 +89,8 @@ class ProductScreen extends React.Component {
                                         product.countInStock > 0 && (
                                             <>
                                                 <li>
-                                                    <div className="row">
-                                                        <div>Quantity</div>
-                                                        <div>
-                                                            <select value={this.state.qty} onChange={e => this.setQty(e)}>
-                                                                {
-                                                                    [...Array(product.countInStock).keys()].map(x => (
-                                                                        <option key = {x + 1} value={x + 1}>{x + 1}</option>
-                                                                    ))
-                                                                }
-                                                            </select>
-                                                        </div>
-                                                    </div>
+                                                    <CartQuantityComponent qty={this.state.qty} setQty={this.setQty} countInStock={product.countInStock}>
+                                                    </CartQuantityComponent>
                                                 </li>
                                                 <li>
                                                     <button onClick={this.addToCart} className="primary block">Add to Cart</button>
