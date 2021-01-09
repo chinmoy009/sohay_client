@@ -246,6 +246,12 @@ img.large {
   margin: 0.1rem;
 }
 
+/* Alert */
+.loading {
+  display: block !important;
+
+}
+
 .success {
   color: green;
 }

@@ -69,7 +69,7 @@ class SignInScreen extends React.Component {
                         <label></label>
                         <div>
                             New customer? {' '}
-                            <Link to="/register">Create new account</Link>
+                            <Link to={`/signup?redirect=${this.state.redirect}`}>Create new account</Link>
                         </div>
                     </div>
                 </form>

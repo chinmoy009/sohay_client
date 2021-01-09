@@ -5,6 +5,7 @@ import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/cartScreen';
 import SignInScreen from './screens/signInScreen';
+import SignUpScreen from './screens/signUpScreen';
 import { signOut } from './actions/userAction';
 
 function App() {
@@ -54,6 +55,8 @@ function App() {
                     <Route path="/" exact component={HomeScreen}/>
                     <Route path="/product/:id" component={ProductScreen}/>
                     <Route path="/signin" component={SignInScreen}/>
+                    <Route path="/signup" component={SignUpScreen}/>
+
                 </main>
                 <footer className="row center">
                     All Rights Reserved
