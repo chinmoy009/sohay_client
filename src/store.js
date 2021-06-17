@@ -7,7 +7,8 @@ const initialState = {
         cartItems: localStorage.getItem("cartItems") 
             ? JSON.parse(localStorage.getItem("cartItems")) : [],
         shippingAddress: localStorage.getItem("savedShippingAddress") 
-            ? JSON.parse(localStorage.getItem("savedShippingAddress")) : {}
+            ? JSON.parse(localStorage.getItem("savedShippingAddress")) : {},
+        paymentMethod: "bkash"
     },
     userSignIn: {
         userInfo: localStorage.getItem("userInfo") 

@@ -6,6 +6,7 @@ import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/cartScreen';
 import SignInScreen from './screens/signInScreen';
 import SignUpScreen from './screens/signUpScreen';
+import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import { signOut } from './actions/userAction';
 import ShippingAddressScreen from './screens/shippingAddressScreen';
 
@@ -58,6 +59,7 @@ function App() {
                     <Route path="/signin" component={SignInScreen}/>
                     <Route path="/signup" component={SignUpScreen}/>
                     <Route path="/shipping" component={ShippingAddressScreen}/>
+                    <Route path="/payment" component={PaymentMethodScreen}/>
                 </main>
                 <footer className="row center">
                     All Rights Reserved
