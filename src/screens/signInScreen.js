@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {signIn} from './../actions/userAction';
+import {signIn, getSignedInUserInfo} from './../actions/userAction';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import LoadingBox from '../components/LoadingBox';
@@ -20,6 +20,10 @@ class SignInScreen extends React.Component {
         e.preventDefault(); 
         this.props.signIn(this.state.email, this.state.password);   
         
+    }
+
+    componentDidMount() {
+        this.props.getSignedInUserInfo();
     }
 
     componentDidUpdate() {
@@ -90,7 +94,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    signIn
+    signIn,
+    getSignedInUserInfo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (SignInScreen);

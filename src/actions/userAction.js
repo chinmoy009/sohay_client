@@ -7,7 +7,8 @@ import {
     USER_SIGN_UP_FAIL, 
     USER_SIGN_UP_REQUEST,
     USER_SIGN_UP_SUCCESS, 
-    USER_SIGN_UP_CLEAR_STATE } from "../constants/userConstant"
+    USER_SIGN_UP_CLEAR_STATE,
+    LOAD_USER_SIGN_IN_INFO } from "../constants/userConstant"
 
 export const signIn = (email, password) => async (dispatch) => {
     dispatch({
@@ -68,6 +69,13 @@ export const signUp = (userInfo) => async (dispatch) => {
 export const clearSignUpScreenErr = () => dispatch => {
     dispatch({
         type: USER_SIGN_UP_CLEAR_STATE,
+        payload: null
+    })
+}
+
+export const getSignedInUserInfo = () => dispatch => {
+    dispatch({
+        type: LOAD_USER_SIGN_IN_INFO,
         payload: null
     })
 }

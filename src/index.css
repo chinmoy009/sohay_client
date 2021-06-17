@@ -317,6 +317,20 @@ img.large {
   display: block;
 }
 
+/* Checkout-steps */
+
+.checkout-steps > div {
+  border-top: 0.3rem gray solid;
+  color: gray;
+  flex: 1;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.checkout-steps > div.active {
+  border-top: orange;
+  color: orange;
+}
 
 
  

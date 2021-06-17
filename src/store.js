@@ -5,7 +5,9 @@ import reducer from './reducers';
 const initialState = {
     cart: {
         cartItems: localStorage.getItem("cartItems") 
-            ? JSON.parse(localStorage.getItem("cartItems")) : []
+            ? JSON.parse(localStorage.getItem("cartItems")) : [],
+        shippingAddress: localStorage.getItem("savedShippingAddress") 
+            ? JSON.parse(localStorage.getItem("savedShippingAddress")) : {}
     },
     userSignIn: {
         userInfo: localStorage.getItem("userInfo") 
