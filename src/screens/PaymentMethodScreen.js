@@ -3,7 +3,6 @@ import CheckOutSteps from '../components/checkoutSteps';
 import {savePaymentMethod} from './../actions/cartAction';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import shippingAddressScreen from './shippingAddressScreen';
 
 class PaymentMethodScreen extends Component {
     constructor(props) {
@@ -11,6 +10,16 @@ class PaymentMethodScreen extends Component {
         if(!this.props.shippingAddress.address) {
             this.props.history.push("/shipping");
         }
+
+        if(!this.props.paymentMethod) {
+            this.setPaymentMethod("bkash");
+        }
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            paymentMethod: props.paymentMethod
+        };
     }
 
     submitHandler(e) {
@@ -34,13 +43,13 @@ class PaymentMethodScreen extends Component {
                     <div>
                         <h1>Payment Method</h1>
                     </div>
-                    <div>
+                    <div onChange={(e) => this.setPaymentMethod(e.target.value)}>
                         <div>
-                            <input type="radio" id="bkash" value="bkash" name="paymentMethod" required checked onChange={(e)=> this.setPaymentMethod(e.target.value)}></input>
+                            <input type="radio" id="bkash" value="bkash" name="paymentMethod" required checked></input>
                             <label htmlFor="bkash">Bkash</label>
                         </div>
                         <div>
-                            <input type="radio" id="nagad" value="nagad" name="paymentMethod" required onChange={(e)=> this.setPaymentMethod(e.target.value)}></input>
+                            <input type="radio" id="nagad" value="nagad" name="paymentMethod" required ></input>
                             <label htmlFor="nagad">Nagad</label>
                         </div>
                     </div>
