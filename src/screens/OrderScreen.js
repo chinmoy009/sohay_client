@@ -5,65 +5,33 @@ import CheckOutSteps from '../components/checkoutSteps';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import {Link} from 'react-router-dom';
-import {createOrder, resetOrder} from './../actions/orderAction'
+import {getOrderDetails} from './../actions/orderAction'
 
-class PlaceOrderScreen extends Component {
+class OrderScreen extends Component {
     constructor(props) {
         super(props);
-        if(!this.props.paymentMethod) {
-            this.props.history.push("/payment")
-        }
     }
 
     static getDerivedStateFromProps(props, state) {
+        const {order} = props.orderDetails;
         return {
             shippingAddress: props.shippingAddress,
             paymentMethod: props.paymentMethod,
-            cartItems: props.cartItems,
-            orderCreate: props.orderCreate
+            orderDetails: props.orderDetails,
+            order: order
         }
     }
 
     componentDidMount() {
-        this.derivePricingValuesFromCartItems();
-    }
-
-    componentDidUpdate() {
-        if(this.state.orderCreate.success) {
-            this.props.history.push(`/order/${this.state.orderCreate.order._id}`);
-            this.props.resetOrder();
-        }
-    }
-
-    toPrice(num) {
-        return Number(num.toFixed(2));
-    }
-
-    derivePricingValuesFromCartItems() {
-        let itemsPrice = this.toPrice(this.state.cartItems.reduce((a, c) => a + c.qty * c.price , 0));
-        let shippingPrice = itemsPrice > 500 ? 50 : 0;
-        let taxPrice = this.toPrice(0.15 * itemsPrice);
-        let totalPrice = itemsPrice + shippingPrice + taxPrice;
-        this.setState({
-            ...this.state,
-            itemsPrice,
-            shippingPrice,
-            taxPrice,
-            totalPrice
-        });
-    }
-
-    placeOrder(e) {
-        this.props.createOrder({
-            ...this.state,
-            orderItems: this.state.cartItems
-        });
+        this.props.getOrderDetails(this.props.match.params.id);
     }
 
     render() {
-        return (
+        return this.state.orderDetails.loading? (<LoadingBox></LoadingBox>): 
+        this.state.orderDetails.error? (<MessageBox variant="danger">{this.state.orderDetails.error}</MessageBox>): 
+        (
             <div>
-                <CheckOutSteps step1 step2 step3 step4></CheckOutSteps>
+                <h1>Order {this.state.orderDetails.order._id}</h1>
                 <div className="row top">
                     <div className="col-2">
                         <ul>
@@ -71,25 +39,29 @@ class PlaceOrderScreen extends Component {
                                 <div className="card card-body">
                                     <h2>Shipping</h2>
                                     <p>
-                                        <strong>Name:</strong> {this.state.shippingAddress.firstname} <br/>
-                                        <strong>Address:</strong> {this.state.shippingAddress.address}.
-                                        {this.state.shippingAddress.postalCode}, {this.state.shippingAddress.city}
+                                        <strong>Name:</strong> {this.state.order.shippingAddress.firstname} <br/>
+                                        <strong>Address:</strong> {this.state.order.shippingAddress.address}.
+                                        {this.state.shippingAddress.postalCode}, {this.state.order.shippingAddress.city}
                                     </p>
+                                    {this.state.isDelivered ? (<MessageBox variant="success">Delivered at {this.state.order.deliveredAt}</MessageBox>)
+                                    : (<MessageBox variant="danger">Not Delivered</MessageBox>)}
                                 </div>
                             </li>
                             <li>
                                 <div className="card card-body">
                                     <h2>Payment</h2>
                                     <p>
-                                        <strong>Method:</strong> {this.state.paymentMethod} 
+                                        <strong>Method:</strong> {this.state.order.paymentMethod} 
                                     </p>
+                                    {this.state.isPaid ? (<MessageBox variant="success">Paid at {this.state.order.paidAt}</MessageBox>)
+                                    : (<MessageBox variant="danger">Not Paid</MessageBox>)}
                                 </div>
-                            </li>
+                            </li> 
                             <li>
                                 <div className="card card-body">
                                     <h2>Order Items</h2>
                                     <ul>
-                                        {this.state.cartItems.map(item => {
+                                        {this.state.order.orderItems.map(item => {
                                             return <li key={item.product}>
                                                 <div className="row">
                                                     <div>
@@ -118,19 +90,19 @@ class PlaceOrderScreen extends Component {
                                 <li>
                                     <div className="row">
                                         <div>Items:</div>
-                                        <div>{this.state.itemsPrice}</div>
+                                        <div>{this.state.order.itemsPrice}</div>
                                     </div>
                                 </li>
                                 <li>
                                     <div className="row">
                                         <div>Shipping:</div>
-                                        <div>{this.state.shippingPrice}</div>
+                                        <div>{this.state.order.shippingPrice}</div>
                                     </div>
                                 </li>
                                 <li>
                                     <div className="row">
                                         <div>Tax:</div>
-                                        <div>{this.state.taxPrice}</div>
+                                        <div>{this.state.order.taxPrice}</div>
                                     </div>
                                 </li>
                                 <li>
@@ -139,17 +111,10 @@ class PlaceOrderScreen extends Component {
                                             <strong>Order Total:</strong>
                                         </div>
                                         <div>
-                                            <strong>{this.state.totalPrice}</strong>
+                                            <strong>{this.state.order.totalPrice}</strong>
                                         </div>
                                     </div>
                                 </li>
-                                <li>
-                                    <button type="button" onClick={(e) => this.placeOrder(e)} className="primary block" disabled={this.state.cartItems.length == 0}>
-                                        Place Order
-                                    </button>
-                                </li>
-                                { this.state.orderCreate.loading && <LoadingBox></LoadingBox>}
-                                { this.state.orderCreate.error && <MessageBox varaint="danger">{this.state.orderCreate.error}</MessageBox>}
                             </ul>
                         </div>
                     </div>
@@ -159,23 +124,14 @@ class PlaceOrderScreen extends Component {
     }
 }
 
-PlaceOrderScreen.propTypes = {
-    shippingAddress: PropTypes.object.isRequired,
-    orderCreate: PropTypes.func.isRequired,
-    cartItems: PropTypes.array,
-    paymentMethod: PropTypes.string
-}
-
 const mapStateToProps = state => ({
     shippingAddress: state.cart.shippingAddress,
     paymentMethod: state.cart.paymentMethod,
-    cartItems: state.cart.cartItems,
-    orderCreate: state.orderCreate
+    orderDetails: state.orderDetails
 });
 
 const mapDispatchToProps = {
-    createOrder,
-    resetOrder
+    getOrderDetails
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (PlaceOrderScreen);
+export default connect(mapStateToProps, mapDispatchToProps) (OrderScreen);
