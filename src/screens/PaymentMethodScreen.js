@@ -52,6 +52,10 @@ class PaymentMethodScreen extends Component {
                             <input type="radio" id="nagad" value="nagad" name="paymentMethod" required ></input>
                             <label htmlFor="nagad">Nagad</label>
                         </div>
+                        <div>
+                            <input type="radio" id="paypal" value="paypal" name="paymentMethod" required ></input>
+                            <label htmlFor="paypal">Paypal</label>
+                        </div>
                     </div>
                     <div>
                         <button className="primary" type="submit">Continue</button>
