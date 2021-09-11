@@ -74,6 +74,10 @@ button.block {
   width: 100%;
 }
 
+button.small {
+  font-size: 1.2rem;
+}
+
 input:hover,
 select:hover,
 textarea:hover,
@@ -331,6 +335,27 @@ img.large {
   border-top: orange;
   color: orange;
 }
+
+/* Table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table tbody tr:nth-of-type(odd) {
+  background-color: lightgray;
+}
+
+.table td, .table tr {
+  text-align: center;
+  border: 0.1rem solid gray;
+  padding: 0.5rem
+}
+
+.table button {
+  margin: 0 0.2rem;
+}
+
 
 
  
