@@ -8,7 +8,10 @@ import {
     USER_SIGN_UP_REQUEST,
     USER_SIGN_UP_SUCCESS, 
     USER_SIGN_UP_CLEAR_STATE,
-    LOAD_USER_SIGN_IN_INFO } from "../constants/userConstant"
+    LOAD_USER_SIGN_IN_INFO, 
+    GET_USER_DETAILS_REQUEST,
+    GET_USER_DETAILS_FAIL,
+    GET_USER_DETAILS_SUCCESS} from "../constants/userConstant"
 
 export const signIn = (email, password) => async (dispatch) => {
     dispatch({
@@ -80,4 +83,26 @@ export const getSignedInUserInfo = () => dispatch => {
         payload: null
     })
 }
+
+export const getUserDetails = () => async(dispatch, getState) => {
+    dispatch({
+        type: GET_USER_DETAILS_REQUEST
+    });
+    const {userSignIn : {userInfo}} = getState();
+    try {
+        const {data} = await Axios.get(`/users/${userInfo._id}`);
+        dispatch({
+            type: GET_USER_DETAILS_SUCCESS,
+            payload: data
+        });
+    } catch(error) {
+        const message = error.response && error.response.message 
+            ? error.response.message : error.message;
+        dispatch({
+            type: GET_USER_DETAILS_FAIL,
+            payload: message
+        });
+    }
+
+};
 

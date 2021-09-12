@@ -7,7 +7,10 @@ import {
     USER_SIGN_UP_SUCCESS, 
     USER_SIGN_UP_FAIL,
     USER_SIGN_UP_CLEAR_STATE,
-    LOAD_USER_SIGN_IN_INFO } from './../constants/userConstant';
+    LOAD_USER_SIGN_IN_INFO, 
+    GET_USER_DETAILS_FAIL,
+    GET_USER_DETAILS_REQUEST,
+    GET_USER_DETAILS_SUCCESS} from './../constants/userConstant';
 
 const initialUserState = {
     loading: false,
@@ -69,6 +72,33 @@ export const userSignUpReducer = (state = initialUserState, action) => {
                 loading: false,
                 error: null,
                 userInfo: null,
+            }
+        default:
+            return state;
+    }
+}
+
+export const userDetaisReducer = (state = {
+    userDetails: {},
+    error: null
+}, action) => {
+    switch(action.type) {
+        case GET_USER_DETAILS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case GET_USER_DETAILS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                userDetails: action.payload
+            }
+        case GET_USER_DETAILS_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
             }
         default:
             return state;
