@@ -12,6 +12,7 @@ import ShippingAddressScreen from './screens/shippingAddressScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 function App() {
 
@@ -47,6 +48,9 @@ function App() {
                                     <Link to="#">{userInfo.name} <i className="fa fa-caret-down"></i></Link>
                                     <ul className="dropdown-content">
                                         <li>
+                                            <Link to="/userProfile">Profile</Link>
+                                        </li>
+                                        <li>
                                             <Link to="/orderHistory">Order History</Link>
                                         </li>
                                         <li>
@@ -71,6 +75,7 @@ function App() {
                     <Route path="/placeorder" component={PlaceOrderScreen}/>
                     <Route path="/order/:id" component={OrderScreen}/>
                     <Route path="/orderHistory" component={OrderHistoryScreen}/>
+                    <Route path="/userProfile" component={ProfileScreen}/>
                 </main>
                 <footer className="row center">
                     All Rights Reserved
